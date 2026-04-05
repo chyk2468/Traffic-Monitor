@@ -57,9 +57,10 @@ def main():
         speeds = {}
         directions = {}
         counts = counter.counts 
+        type_counts = counter.type_counts
 
         if tracked_detections.tracker_id is not None:
-            for xyxy, track_id in zip(tracked_detections.xyxy, tracked_detections.tracker_id):
+            for xyxy, track_id, class_id in zip(tracked_detections.xyxy, tracked_detections.tracker_id, tracked_detections.class_id):
                 # We use the bottom-center of the bounding box to represent where the car touches the road
                 x1, y1, x2, y2 = xyxy
                 cx, cy = int((x1 + x2) / 2), int(y2)
@@ -77,10 +78,11 @@ def main():
 
                 # 4. Count
                 prev_y = direction_detector.last_y.get(track_id, cy)
-                counts = counter.update(track_id, prev_y, cy, direction)
+                vehicle_type = config.CLASS_NAMES.get(class_id, "Unknown")
+                counts, type_counts = counter.update(track_id, prev_y, cy, direction, vehicle_type)
 
         # D. Visualize
-        annotated_frame = visualizer.draw(frame, tracked_detections, speeds, directions, counts)
+        annotated_frame = visualizer.draw(frame, tracked_detections, speeds, directions, counts, type_counts)
 
         # E. Output
         out.write(annotated_frame)

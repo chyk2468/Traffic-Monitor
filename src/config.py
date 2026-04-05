@@ -12,6 +12,12 @@ OUTPUT_PATH = os.path.join(DATA_DIR, "output", "output.mp4")
 
 # 2 (Car), 3 (Motorcycle), 5 (Bus), 7 (Truck)
 TARGET_CLASSES = [2, 3, 5, 7] 
+CLASS_NAMES = {
+    2: "Car",
+    3: "Motorcycle",
+    5: "Bus",
+    7: "Truck"
+}
 
 # Physics & Tracking
 SPEED_LIMIT_KMH = 80.0
