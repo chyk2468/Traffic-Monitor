@@ -8,13 +8,6 @@ class Visualizer:
         self.trails = {} 
 
     def draw(self, frame, tracked_detections, speeds, directions, counts, type_counts):
-        # 1. Draw Homography ROI
-        cv2.polylines(frame, [config.SOURCE_POLYGON.astype(np.int32)], True, (0, 255, 255), 2)
-        
-        # 2. Draw Counting Line
-        h, w = frame.shape[:2]
-        cv2.line(frame, (0, config.COUNTING_LINE_Y), (w, config.COUNTING_LINE_Y), (255, 0, 0), 2)
-
         # 3. Draw Traffic Dashboard
         # Dynamically calculate dashboard height based on number of vehicle types
         dashboard_h = 130 + (len(type_counts) * 30)
